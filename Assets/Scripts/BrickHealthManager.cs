@@ -10,7 +10,6 @@ public class BrickHealthManager : MonoBehaviour
     public GameObject brickDestroyParticle;
     private SpriteRenderer blockImage;
     public Sprite spriteBlock;
-    //private AudioSource audioSound;
     
     private ScoreManager score;
     // Start is called before the first frame update
@@ -18,10 +17,14 @@ public class BrickHealthManager : MonoBehaviour
     {
         blockImage = GetComponent<SpriteRenderer>();
         brickHealthText = GetComponentInChildren<Text> ();
-        //audioSound = GetComponent<AudioSource>();
         gameManager = FindObjectOfType<GameManager>();
         score = FindObjectOfType<ScoreManager>();
         brickHealth = gameManager.level;
+        //chance to double health
+        if(Random.value <= gameManager.probabilityOfDoubleHealth && gameManager.level >= 5){
+            brickHealth = gameManager.level*2;
+        }
+        brickHealthText.text = "" + brickHealth;
     }
     void OnEnable() {
         gameManager = FindObjectOfType<GameManager>();
@@ -43,8 +46,6 @@ public class BrickHealthManager : MonoBehaviour
     }
     void OnCollisionExit2D(Collision2D other) {
         if(other.gameObject.tag == "Ball" || other.gameObject.tag == "Extra Ball"){
-            //sound.ballHit.Play(); 
-            //audioSound.Play();
             blockImage.sprite = spriteBlock;
             Instantiate(brickDestroyParticle, transform.position, Quaternion.identity);
             TakeDamage(1);

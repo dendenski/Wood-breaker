@@ -60,6 +60,7 @@ public class BallControl : MonoBehaviour
                         = BrickMovementControl.brickState.move;
                 }
                 constantSpeed = 18.0f;
+                ColliderChangeEnable(true);
                 gameManager.PlaceBricks();
                 currentBallState = ballState.aim;
                 break;
@@ -191,9 +192,25 @@ public class BallControl : MonoBehaviour
         tempVelocity = new Vector2(0, -ballVelocityY).normalized;
         if(currentBallState == ballState.fire || currentBallState == ballState.wait){
             gameManager.ballsInScene.ForEach(c => c.GetComponent<Rigidbody2D>().velocity 
-                        = constantSpeed * tempVelocity );
-            ball.velocity = constantSpeed *tempVelocity;  
+                        = constantSpeed * tempVelocity*2);
+            ColliderChangeEnable(false);
+
+            ball.velocity = constantSpeed *tempVelocity*2;  
         }
 
+    }
+
+    private void ColliderChangeEnable(bool status){
+        for(int i = 0; i < gameManager.bricksInScene.Count; i++)
+        {
+            if(gameManager.bricksInScene[i].tag =="Square Brick"){
+                gameManager.bricksInScene[i].GetComponent<BoxCollider2D>().enabled 
+                    = status;
+            }else if(gameManager.bricksInScene[i].tag =="Triangle Brick")
+            {
+                gameManager.bricksInScene[i].GetComponent<PolygonCollider2D>().enabled 
+                    = status;
+            }
+        }
     }
 }

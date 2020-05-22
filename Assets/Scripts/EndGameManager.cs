@@ -50,6 +50,7 @@ public class EndGameManager : MonoBehaviour
         if(other.gameObject.tag == "Square Brick" || other.gameObject.tag == "Triangle Brick"){
             ball.currentBallState = BallControl.ballState.endGame;
             score.SetHighScore();
+            stopButton.interactable = false;
             resumeButton.gameObject.SetActive (false);
             endGamePanel.SetActive (true);
         }
