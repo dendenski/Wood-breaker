@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4671037126110647764}
   - component: {fileID: 2534723361911435323}
   - component: {fileID: 19597246411143294}
+  - component: {fileID: -8492583195679188582}
   m_Layer: 8
   m_Name: Extra Ball
   m_TagString: Extra Ball
@@ -120,3 +121,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &-8492583195679188582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8108829006652502648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b3d921c108cb84fb4447d4898fd3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBallStopped: 0
+  targetPosition: {x: 0, y: 0}
+  specialItemManager: {fileID: 0}

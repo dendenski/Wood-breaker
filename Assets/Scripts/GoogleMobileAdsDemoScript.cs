@@ -15,13 +15,18 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour
     }
     private void RequestBanner()
     {
-        //test ad
-        #if UNITY_ANDROID
+        //actual ads
+/*         #if UNITY_ANDROID
             string adUnitId = "ca-app-pub-3037190026293447/2189039987";
         #else
             string adUnitId = "unexpected_platform";
+        #endif */
+        //test ads
+        #if UNITY_ANDROID
+            string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+        #else
+            string adUnitId = "unexpected_platform";
         #endif
-        
 
         // Create a 320x50 banner at the top of the screen.
         this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Top);

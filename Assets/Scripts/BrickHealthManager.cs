@@ -10,11 +10,14 @@ public class BrickHealthManager : MonoBehaviour
     public GameObject brickDestroyParticle;
     private SpriteRenderer blockImage;
     public Sprite spriteBlock;
+
+    public SpecialItemManager specialItemManager;
     
     private ScoreManager score;
     // Start is called before the first frame update
     void Start()
     {
+        specialItemManager = FindObjectOfType<SpecialItemManager>();
         blockImage = GetComponent<SpriteRenderer>();
         brickHealthText = GetComponentInChildren<Text> ();
         gameManager = FindObjectOfType<GameManager>();
@@ -39,8 +42,8 @@ public class BrickHealthManager : MonoBehaviour
     {
         brickHealthText.text = "" + brickHealth;
         if(brickHealth <= 0){
-            //destroy brick
             score.ScoreIncrease();
+            gameManager.bricksInScene.Remove(this.gameObject);
             this.gameObject.SetActive(false);
         }
     }
@@ -48,7 +51,7 @@ public class BrickHealthManager : MonoBehaviour
         if(other.gameObject.tag == "Ball" || other.gameObject.tag == "Extra Ball"){
             blockImage.sprite = spriteBlock;
             Instantiate(brickDestroyParticle, transform.position, Quaternion.identity);
-            TakeDamage(1);
+            TakeDamage(specialItemManager.damage);
         }
     }
 }

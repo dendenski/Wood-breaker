@@ -10,6 +10,7 @@ TagManager:
   - Triangle Brick
   - Extra Ball Up
   - Extra Ball
+  - Star Up
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - 
   - 
   - Ball
-  - 
+  - Extra Ball Up
   - 
   - 
   - 
