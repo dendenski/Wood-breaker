@@ -28,13 +28,10 @@ public class BallControl : MonoBehaviour
     public SpecialItemManager specialItemManager;
     public EndGameManager endGameManager;
     private bool isClicked;
-   
     LineRenderer lineRenderer;
     public Vector2 targetPositionOfStopButton;
     public Vector2 initialPositionOfStopButton;
-
     public Button stopButton;
-
     public GameObject specialItem;
     void Start()
     {
@@ -47,11 +44,16 @@ public class BallControl : MonoBehaviour
         endGameManager = FindObjectOfType<EndGameManager>();
         gameManager = FindObjectOfType<GameManager>();
         currentBallState = ballState.aim;
-        
         lineRenderer.enabled =false;
     }
     void Update()
     {
+        
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            ballDown();
+        }
+
+
         if(specialItemManager.damage == 2){
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1f,0f,0f);
         }else if(specialItemManager.damage == 1){
@@ -62,7 +64,7 @@ public class BallControl : MonoBehaviour
             case ballState.aim:
                 MouseInput();
                 TouchInput2();
-
+                stopButton.interactable = true;
                 stopButton.transform.position = Vector2.MoveTowards(stopButton.transform.position, initialPositionOfStopButton,  20 * Time.deltaTime);
                 specialItem.transform.position = Vector2.MoveTowards(specialItem.transform.position, new Vector2(0f,0f),  20 * Time.deltaTime);
                 break;
@@ -77,6 +79,9 @@ public class BallControl : MonoBehaviour
                 }
                 break;
             case ballState.endShot:
+                constantSpeed = 20.0f;
+                
+                currentBallState = ballState.aim;
                 for(int i = 0; i < gameManager.bricksInScene.Count; i++)
                 {
                     gameManager.bricksInScene[i].GetComponent<BrickMovementControl>().currentState 
@@ -85,10 +90,11 @@ public class BallControl : MonoBehaviour
                 ColliderChangeEnable(true);
                 gameManager.PlaceBricks();
                 transform.position = FindObjectOfType<BallStop>().firstBalltoLand.transform.position;
+                FindObjectOfType<BallStop>().firstBalltoLand.GetComponent<BallMovement>().firstBall = false;
                 FindObjectOfType<BallStop>().firstBalltoLand.SetActive(false);
                 FindObjectOfType<BallStop>().isFirstBallLanded = false;
+                FindObjectOfType<BallStop>().firstBalltoLand = null;
                 specialItemManager.BallsNormalize();
-                currentBallState = ballState.aim;
                 break;
             case ballState.endGame:
                 break;
@@ -231,8 +237,11 @@ public class BallControl : MonoBehaviour
     public void ballDown(){
         tempVelocity = new Vector2(0, -ballVelocityY).normalized;
         if(currentBallState == ballState.fire || currentBallState == ballState.wait){
+            stopButton.interactable = false;
             gameManager.ballsInScene.ForEach(c => c.GetComponent<Rigidbody2D>().velocity 
                         = constantSpeed * tempVelocity*2);
+            FindObjectOfType<ExtraBallManager>().numberOfBallsToFire = 0;
+            currentBallState = BallControl.ballState.wait;
             ColliderChangeEnable(false);
         }
     }

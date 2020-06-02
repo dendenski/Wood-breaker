@@ -19,27 +19,35 @@ public class BallStop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.tag == "Extra Ball"){
-            gameManager.ballsInScene.Remove(other.gameObject);
             other.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.9716981f,0.8459923f,0.7196066f);
+            other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            other.transform.position = new Vector2(other.transform.position.x, -6.74f);
             if(isFirstBallLanded){
-                other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                other.transform.position = new Vector2(other.transform.position.x, -6.74f);
                 other.gameObject.GetComponent<BallMovement>().isBallStopped = true;
                 other.gameObject.GetComponent<BallMovement>().targetPosition = firstBalltoLand.transform.position;
                 StartCoroutine(other.gameObject.GetComponent<BallMovement>().BallMoveToNewPosition());
             }
-            else
+            else if(ballControl.currentBallState == BallControl.ballState.fire)
             {
                 isFirstBallLanded = true;
-                other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                other.transform.position = new Vector2(other.transform.position.x, -6.74f);
                 firstBalltoLand = other.gameObject;
-                ballControl.currentBallState = BallControl.ballState.wait;
+                other.gameObject.GetComponent<BallMovement>().firstBall = true;
+                gameManager.ballsInScene.Remove(other.gameObject);
+                if(ballControl.currentBallState == BallControl.ballState.fire){
+                    ballControl.currentBallState = BallControl.ballState.wait;
+                }
             }
+            else{
+                isFirstBallLanded = true;
+                firstBalltoLand = other.gameObject;
+                other.gameObject.GetComponent<BallMovement>().firstBall = true;
+                gameManager.ballsInScene.Remove(other.gameObject);
+            }
+            
         }
     }
 

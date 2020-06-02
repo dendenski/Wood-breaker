@@ -73,10 +73,15 @@ public class ScoreManager : MonoBehaviour
         diamondStarCount = PlayerPrefs.GetInt ("diamondStarCount");
     }
 
-        public void SubtractDiamondStarCount(int amount){
-        diamondStarCount -= amount;
-        PlayerPrefs.SetInt ("diamondStarCount", diamondStarCount);
-        PlayerPrefs.Save();
-        diamondStarCount = PlayerPrefs.GetInt ("diamondStarCount");
+    public bool SubtractDiamondStarCount(int amount){
+        if((diamondStarCount - amount) >= 0){
+            diamondStarCount -= amount;
+            PlayerPrefs.SetInt ("diamondStarCount", diamondStarCount);
+            PlayerPrefs.Save();
+            diamondStarCount = PlayerPrefs.GetInt ("diamondStarCount");
+            return true;
+        }else{
+            return false;
+        }
     }
 }

@@ -10,11 +10,19 @@ public class BallMovement : MonoBehaviour
     private float waitTime = 5.0f;
     private float timer = 5.0f;
     public SpecialItemManager specialItemManager;
+    public bool firstBall;
     // Start is called before the first frame update
     void Start()
     {
         specialItemManager = FindObjectOfType<SpecialItemManager>();
         isBallStopped = false;
+        firstBall = false;
+    }
+
+    void OnEnable(){
+        specialItemManager = FindObjectOfType<SpecialItemManager>();
+        isBallStopped = false;
+        firstBall = false;
     }
     // Update is called once per frame
     void Update()
@@ -24,7 +32,7 @@ public class BallMovement : MonoBehaviour
         }
         currentVelocity = this.GetComponent<Rigidbody2D>().velocity;
         timer += Time.deltaTime;
-        if (timer >= waitTime && !isBallStopped)
+        if (timer >= waitTime && !firstBall)
         {
             Vector2 tempVelocity = this.GetComponent<Rigidbody2D>().velocity;
             float sample = Mathf.Round(tempVelocity.y * 10f) / 10f;
@@ -44,9 +52,9 @@ public class BallMovement : MonoBehaviour
     }
     public IEnumerator BallMoveToNewPosition(){
         yield return new WaitForSeconds(.5f);
+        FindObjectOfType<GameManager>().ballsInScene.Remove(this.gameObject);
         isBallStopped = false;
         this.gameObject.SetActive(false);
-        
     }
     void OnCollisionEnter2D(Collision2D other) {
         if(specialItemManager.damage == 2){

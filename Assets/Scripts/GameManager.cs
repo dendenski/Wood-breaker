@@ -23,11 +23,12 @@ public class GameManager : MonoBehaviour
     public float probabilityOfDoubleHealth;
     
     private AudioSource audioState;
+    private BallControl ballControl;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        ballControl = FindObjectOfType<BallControl>();
         audioState = this.GetComponent<AudioSource>();
         objectPool = FindObjectOfType<ObjectPool>();
         level = 1;
@@ -122,5 +123,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("fastball");
         ballsInScene.ForEach(c => c.GetComponent<Rigidbody2D>().velocity 
                     = 2 * c.GetComponent<Rigidbody2D>().velocity);
+        ballControl.constantSpeed *= 2;
     }
 }

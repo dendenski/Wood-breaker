@@ -16,7 +16,7 @@ public class SpecialItemManager : MonoBehaviour
     public Button halfHpButton;
     public Text balls2xButtonText;
     public int balls2x;
-
+    public bool isballs2x;
     private int balls2xCost;
     private int damage2xCost;
     private int halfHPCost;
@@ -24,6 +24,7 @@ public class SpecialItemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isballs2x = false;
         balls2xCost = 30;
         halfHPCost = 20;
         damage2xCost = 10;
@@ -51,22 +52,24 @@ public class SpecialItemManager : MonoBehaviour
         }
     }
 
-
     public void Balls2x(){
-        scoreManager.SubtractDiamondStarCount(balls2xCost);
-        extraBallManager.numberOfExtraBalls *= 2;
-        extraBallManager.numberOfBallsToFire *= 2;
-        balls2x = extraBallManager.numberOfExtraBalls;
-        balls2xButtonText.color = new Color(1f,0f,0f);
+        if(scoreManager.SubtractDiamondStarCount(balls2xCost)){
+            extraBallManager.numberOfExtraBalls *= 2;
+            extraBallManager.numberOfBallsToFire *= 2;
+            balls2x = extraBallManager.numberOfExtraBalls;
+            balls2xButtonText.color = new Color(1f,0f,0f);
+            isballs2x = true;
+        }
         balls2xButton.interactable = false;
     }
-
     public void BallsNormalize(){
-        if(balls2xButton.interactable == false){ 
+        if(balls2xButton.interactable == false && isballs2x == true){ 
             balls2x /= 2;
             extraBallManager.numberOfExtraBalls -= balls2x;
             extraBallManager.numberOfBallsToFire -= balls2x;
             balls2xButtonText.color = new Color(1f,0.5f,0f);
+            isballs2x = false;
+            
         }
         if(damage2xButton.interactable == false){ 
             damage = 1;
@@ -84,22 +87,22 @@ public class SpecialItemManager : MonoBehaviour
         }
     }
     public void Damage2x(){
-        scoreManager.SubtractDiamondStarCount(damage2xCost);
-        damage = 2;
+        if(scoreManager.SubtractDiamondStarCount(damage2xCost)){
+            damage = 2;
+        }
         damage2xButton.interactable = false;
     }
     public void HalfLife(){
-        scoreManager.SubtractDiamondStarCount(halfHPCost);
-        for(int i = 0; i < gameManager.bricksInScene.Count; i++)
-        {
-            BrickHealthManager brickHealthManager = gameManager.bricksInScene[i].GetComponent<BrickHealthManager>();
-            if(brickHealthManager == null){
-                continue;
+        if(scoreManager.SubtractDiamondStarCount(halfHPCost)){
+            for(int i = 0; i < gameManager.bricksInScene.Count; i++)
+            {
+                BrickHealthManager brickHealthManager = gameManager.bricksInScene[i].GetComponent<BrickHealthManager>();
+                if(brickHealthManager == null){
+                    continue;
+                }
+                brickHealthManager.brickHealth /=2;
+                cameraShake.shakeDuration = 1f;
             }
-            brickHealthManager.brickHealth /=2;
-            cameraShake.shakeDuration = 1f;
-
-
         }
         halfHpButton.interactable = false;
     }
