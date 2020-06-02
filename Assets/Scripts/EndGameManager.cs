@@ -14,18 +14,39 @@ public class EndGameManager : MonoBehaviour
     public Button halfLifeButton;
 
     public Text menuText;
-     
+    public GameManager gameManager;
     public Button resumeButton;
     private ScoreManager score;
+
+    
+    private int soundState;
+    private int musicState;
+    public GameObject soundToggle;
+    public GameObject musicToggle;
     public bool isPaused;
     // Start is called before the first frame update
     void Start()
     {
         isPaused = false;
+        gameManager = FindObjectOfType<GameManager>();
         sampleAds = FindObjectOfType<GoogleMobileAdsDemoScript>();
         ball = FindObjectOfType<BallControl>();
         score = FindObjectOfType<ScoreManager>();
         endGamePanel.SetActive (false);
+        soundState = PlayerPrefs.GetInt ("soundOption");
+        musicState = PlayerPrefs.GetInt ("musicOption");
+        if(soundState == 0){
+            soundToggle.GetComponent<Toggle>().isOn = true;
+        }
+        else if(soundState == 1){
+            soundToggle.GetComponent<Toggle>().isOn = false;
+        }
+        if(musicState == 0){
+            musicToggle.GetComponent<Toggle>().isOn = true;
+        }
+        else if(musicState == 1){
+            musicToggle.GetComponent<Toggle>().isOn = false;
+        }
     }
 
     // Update is called once per frame
@@ -57,6 +78,27 @@ public class EndGameManager : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
+        if(soundToggle.GetComponent<Toggle>().isOn == true){
+            soundState = 0;
+            PlayerPrefs.SetInt ("soundOption", soundState);
+            PlayerPrefs.Save();
+        }
+        else if(soundToggle.GetComponent<Toggle>().isOn == false){
+            soundState = 1;
+            PlayerPrefs.SetInt ("soundOption", soundState);
+            PlayerPrefs.Save();
+        }
+        if(musicToggle.GetComponent<Toggle>().isOn == true){
+            musicState = 0;
+            PlayerPrefs.SetInt ("musicOption", musicState);
+            PlayerPrefs.Save();
+        }
+        else if(musicToggle.GetComponent<Toggle>().isOn == false){
+            musicState = 1;
+            PlayerPrefs.SetInt ("musicOption", musicState);
+            PlayerPrefs.Save();
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Square Brick" || other.gameObject.tag == "Triangle Brick"){
@@ -65,11 +107,20 @@ public class EndGameManager : MonoBehaviour
             
             menuText.text = "GAME OVER!";
             stopButton.interactable = false;
+            balls2xButton.interactable = false;
+            damage2xButton.interactable = false;
+            halfLifeButton.interactable = false;
             resumeButton.gameObject.SetActive (false);
             endGamePanel.SetActive (true);
         }
         if(other.gameObject.tag == "Extra Ball Up"){
             other.gameObject.SetActive(false);
+            gameManager.bricksInScene.Remove(other.gameObject);
+        }
+        
+        if(other.gameObject.tag == "Extra Ball Up"){
+            other.gameObject.SetActive(false);
+            gameManager.bricksInScene.Remove(other.gameObject);
         }
     }
 

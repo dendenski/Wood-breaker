@@ -22,10 +22,13 @@ public class GameManager : MonoBehaviour
     
     public float probabilityOfDoubleHealth;
     
+    private AudioSource audioState;
+    
     // Start is called before the first frame update
     void Start()
     {
         
+        audioState = this.GetComponent<AudioSource>();
         objectPool = FindObjectOfType<ObjectPool>();
         level = 1;
         probabilityOfBricks = 0.20f;
@@ -50,7 +53,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(PlayerPrefs.GetInt ("musicOption") == 0){
+            audioState.volume = 1.0f;
+        }
+        else if(PlayerPrefs.GetInt ("musicOption") == 1){
+            audioState.volume = 0.0f;
+        }
     }
     public void PlaceBricks(){
         level++;

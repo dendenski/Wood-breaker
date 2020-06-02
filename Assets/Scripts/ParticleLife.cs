@@ -25,7 +25,12 @@ public class ParticleLife : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(soundState == 0){
+            audioState.volume = 1.0f;
+        }
+        else if(soundState == 1){
+            audioState.volume = 0.0f;
+        }
         lifetimeSeconds -= Time.deltaTime;
         if(lifetimeSeconds <=0){
             this.gameObject.SetActive(false);

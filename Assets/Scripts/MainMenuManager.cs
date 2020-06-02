@@ -10,19 +10,28 @@ public class MainMenuManager : MonoBehaviour
     public Button optionButton;
     public Button quitButton;
     private int soundState;
+    private int musicState;
 
-    private GameObject soundToggle;
+    public GameObject soundToggle;
+    public GameObject musicToggle;
     // Start is called before the first frame update
     void Start()
     {
-        soundToggle  = GameObject.Find("Sound Toggle");
+        //soundToggle  = GameObject.Find("Sound Toggle");
         optionPanel.SetActive (false);
         soundState = PlayerPrefs.GetInt ("soundOption");
+        musicState = PlayerPrefs.GetInt ("musicOption");
         if(soundState == 0){
             soundToggle.GetComponent<Toggle>().isOn = true;
         }
         else if(soundState == 1){
             soundToggle.GetComponent<Toggle>().isOn = false;
+        }
+        if(musicState == 0){
+            musicToggle.GetComponent<Toggle>().isOn = true;
+        }
+        else if(musicState == 1){
+            musicToggle.GetComponent<Toggle>().isOn = false;
         }
     }
 
@@ -37,6 +46,16 @@ public class MainMenuManager : MonoBehaviour
         else if(soundToggle.GetComponent<Toggle>().isOn == false){
             soundState = 1;
             PlayerPrefs.SetInt ("soundOption", soundState);
+            PlayerPrefs.Save();
+        }
+        if(musicToggle.GetComponent<Toggle>().isOn == true){
+            musicState = 0;
+            PlayerPrefs.SetInt ("musicOption", musicState);
+            PlayerPrefs.Save();
+        }
+        else if(musicToggle.GetComponent<Toggle>().isOn == false){
+            musicState = 1;
+            PlayerPrefs.SetInt ("musicOption", musicState);
             PlayerPrefs.Save();
         }
         if (Input.GetKeyDown(KeyCode.Escape) && optionPanel.activeInHierarchy) {

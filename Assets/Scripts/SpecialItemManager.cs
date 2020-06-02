@@ -82,14 +82,12 @@ public class SpecialItemManager : MonoBehaviour
         scoreManager.diamondStarCount >= halfHPCost){ 
             halfHpButton.interactable = true;
         }
-
     }
     public void Damage2x(){
         scoreManager.SubtractDiamondStarCount(damage2xCost);
         damage = 2;
         damage2xButton.interactable = false;
     }
-
     public void HalfLife(){
         scoreManager.SubtractDiamondStarCount(halfHPCost);
         for(int i = 0; i < gameManager.bricksInScene.Count; i++)
