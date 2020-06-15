@@ -3115,13 +3115,13 @@ MonoBehaviour:
   - amountToPool: 100
     objectToPool: {fileID: 8583959578953280869, guid: 1ad1ad3574f21374c88fbeafdc23ae09,
       type: 3}
-  - amountToPool: 30
+  - amountToPool: 16
     objectToPool: {fileID: 236119942555651412, guid: 67ea1dde7992f7c4f883e3eee6cd0738,
       type: 3}
   - amountToPool: 999
     objectToPool: {fileID: 8108829006652502648, guid: e4473205b1b7dc248a0611f00a0faa9b,
       type: 3}
-  - amountToPool: 20
+  - amountToPool: 16
     objectToPool: {fileID: 7950055129004642199, guid: 99b8e23d89022b8419430ccbeff03844,
       type: 3}
 --- !u!4 &1045928910

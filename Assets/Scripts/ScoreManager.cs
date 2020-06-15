@@ -8,7 +8,6 @@ public class ScoreManager : MonoBehaviour
     public Text highScoreText;
     private int currentScore;
     private int highScore;
-    
     public int diamondStarCount;
     public Text diamondStarCountText;
     // Start is called before the first frame update
@@ -33,13 +32,10 @@ public class ScoreManager : MonoBehaviour
         else{
             scoreText.text = "" + (highScore);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         diamondStarCountText.text = "x " + diamondStarCount;
-        
+    }
+    public void ScoreIncrease(){
+        currentScore++;
         if((currentScore) < 10){
             scoreText.text = "0000" + (currentScore);
         }
@@ -56,9 +52,6 @@ public class ScoreManager : MonoBehaviour
             scoreText.text = "" + (currentScore);
         }
     }
-    public void ScoreIncrease(){
-        currentScore++;
-    }
     public void SetHighScore(){
         if(currentScore > highScore){
             PlayerPrefs.SetInt ("highscore", currentScore);
@@ -71,6 +64,7 @@ public class ScoreManager : MonoBehaviour
         PlayerPrefs.SetInt ("diamondStarCount", diamondStarCount);
         PlayerPrefs.Save();
         diamondStarCount = PlayerPrefs.GetInt ("diamondStarCount");
+        diamondStarCountText.text = "x " + diamondStarCount;
     }
 
     public bool SubtractDiamondStarCount(int amount){
@@ -79,6 +73,7 @@ public class ScoreManager : MonoBehaviour
             PlayerPrefs.SetInt ("diamondStarCount", diamondStarCount);
             PlayerPrefs.Save();
             diamondStarCount = PlayerPrefs.GetInt ("diamondStarCount");
+            diamondStarCountText.text = "x " + diamondStarCount;
             return true;
         }else{
             return false;

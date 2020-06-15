@@ -13,10 +13,8 @@ public class ExtraBallManager : MonoBehaviour
     public ObjectPool objectPool;
     public Text numberOFBallsText;
     public SpecialItemManager specialItemManager;
-    // Start is called before the first frame update
     void Start()
     {
-        
         specialItemManager = FindObjectOfType<SpecialItemManager>();
         ballControl = FindObjectOfType<BallControl>();
         gameManager = FindObjectOfType<GameManager> ();
@@ -24,14 +22,10 @@ public class ExtraBallManager : MonoBehaviour
         numberOfExtraBalls = 1;
         numberOfBallsToFire = 1;
     }
-
-    // Update is called once per frame
     void Update()
     {
         numberOFBallsText.text = "x" + (numberOfBallsToFire);
-         
         numberOFBallsText.transform.position = new Vector2( ballControl.transform.position.x, numberOFBallsText.transform.position.y);
-
         if(ballControl.currentBallState == BallControl.ballState.fire ||
             ballControl.currentBallState == BallControl.ballState.wait){
             if(numberOfBallsToFire > 0){
@@ -55,7 +49,6 @@ public class ExtraBallManager : MonoBehaviour
                 }
             }
         }
-
         if(ballControl.currentBallState == BallControl.ballState.endShot){
             numberOfBallsToFire = numberOfExtraBalls;
         }

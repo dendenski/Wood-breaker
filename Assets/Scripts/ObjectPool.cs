@@ -10,7 +10,6 @@ public class ObjectPool : MonoBehaviour
 {    
     public List<GameObject> pooledObjects;
     public List<ObjectPoolItem> itemsToPool;
-    // Start is called before the first frame update
     void Start()
     {
         pooledObjects = new List<GameObject> ();
@@ -29,11 +28,5 @@ public class ObjectPool : MonoBehaviour
             }
         }
         return null;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

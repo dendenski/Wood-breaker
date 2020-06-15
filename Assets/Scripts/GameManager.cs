@@ -14,18 +14,13 @@ public class GameManager : MonoBehaviour
     //private ObjectPool objectPool;
     public int numberOfExtraBallsInRow = 0;
     public int numberOfStarsInRow = 0;
-    
     private ObjectPool objectPool;
     public Sprite spriteSquare; 
     public Sprite spriteTriangle; 
     public float probabilityOfBricks;
-    
     public float probabilityOfDoubleHealth;
-    
     private AudioSource audioState;
     private BallControl ballControl;
-    
-    // Start is called before the first frame update
     void Start()
     {
         ballControl = FindObjectOfType<BallControl>();
@@ -50,14 +45,12 @@ public class GameManager : MonoBehaviour
         numberOfExtraBallsInRow = 0;
         numberOfStarsInRow = 0;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if(PlayerPrefs.GetInt ("musicOption") == 0){
+        if(PlayerPrefs.GetInt ("musicOption") == 0 && audioState.volume != 1.0f){
             audioState.volume = 1.0f;
         }
-        else if(PlayerPrefs.GetInt ("musicOption") == 1){
+        else if(PlayerPrefs.GetInt ("musicOption") == 1  && audioState.volume != 0f){
             audioState.volume = 0.0f;
         }
     }
@@ -117,7 +110,6 @@ public class GameManager : MonoBehaviour
             brick.SetActive(true);
         }
     }
-
     public IEnumerator FastBall(){
         yield return new WaitForSeconds(30f);
         Debug.Log("fastball");

@@ -10,7 +10,6 @@ public class BrickMovementControl : MonoBehaviour
     }
     private bool hasMoved;
     public brickState currentState;
-    // Start is called before the first frame update
     void Start()
     {
         hasMoved = false;
@@ -20,8 +19,6 @@ public class BrickMovementControl : MonoBehaviour
         hasMoved = false;
         currentState = brickState.stop;
     }
-
-    // Update is called once per frame
     void Update()
     {
         if(currentState == brickState.stop){

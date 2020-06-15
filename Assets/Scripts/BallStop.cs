@@ -9,17 +9,10 @@ public class BallStop : MonoBehaviour
     private GameManager gameManager;
     public GameObject firstBalltoLand;
     public bool isFirstBallLanded;
-    // Start is called before the first frame update
     void Start()
     {
         isFirstBallLanded = false;
         gameManager = FindObjectOfType<GameManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.tag == "Extra Ball"){
@@ -47,9 +40,6 @@ public class BallStop : MonoBehaviour
                 other.gameObject.GetComponent<BallMovement>().firstBall = true;
                 gameManager.ballsInScene.Remove(other.gameObject);
             }
-            
         }
     }
-
-
 }

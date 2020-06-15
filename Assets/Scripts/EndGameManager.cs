@@ -12,19 +12,15 @@ public class EndGameManager : MonoBehaviour
     public Button balls2xButton;
     public Button damage2xButton;
     public Button halfLifeButton;
-
     public Text menuText;
     public GameManager gameManager;
     public Button resumeButton;
     private ScoreManager score;
-
-    
     private int soundState;
     private int musicState;
     public GameObject soundToggle;
     public GameObject musicToggle;
     public bool isPaused;
-    // Start is called before the first frame update
     void Start()
     {
         isPaused = false;
@@ -48,8 +44,6 @@ public class EndGameManager : MonoBehaviour
             musicToggle.GetComponent<Toggle>().isOn = false;
         }
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -98,13 +92,11 @@ public class EndGameManager : MonoBehaviour
             PlayerPrefs.SetInt ("musicOption", musicState);
             PlayerPrefs.Save();
         }
-
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Square Brick" || other.gameObject.tag == "Triangle Brick"){
             ball.currentBallState = BallControl.ballState.endGame;
             score.SetHighScore();
-            
             menuText.text = "GAME OVER!";
             stopButton.interactable = false;
             balls2xButton.interactable = false;
@@ -117,13 +109,11 @@ public class EndGameManager : MonoBehaviour
             other.gameObject.SetActive(false);
             gameManager.bricksInScene.Remove(other.gameObject);
         }
-        
         if(other.gameObject.tag == "Extra Ball Up"){
             other.gameObject.SetActive(false);
             gameManager.bricksInScene.Remove(other.gameObject);
         }
     }
-
     public void Retry(){
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1;
@@ -133,7 +123,6 @@ public class EndGameManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
     }
-
     public void Resume(){
         if(isPaused && ball.currentBallState != BallControl.ballState.endGame){
             isPaused = false;

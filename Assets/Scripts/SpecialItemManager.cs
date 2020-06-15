@@ -5,10 +5,8 @@ using UnityEngine.UI;
 public class SpecialItemManager : MonoBehaviour
 {
     public ExtraBallManager extraBallManager;
-
     public BrickHealthManager brickHealthManager;
     public ScoreManager scoreManager;
-
     public GameManager gameManager;
     public CameraShake cameraShake;
     public Button balls2xButton;
@@ -21,7 +19,6 @@ public class SpecialItemManager : MonoBehaviour
     private int damage2xCost;
     private int halfHPCost;
     public int damage;
-    // Start is called before the first frame update
     void Start()
     {
         isballs2x = false;
@@ -35,23 +32,19 @@ public class SpecialItemManager : MonoBehaviour
         extraBallManager = FindObjectOfType<ExtraBallManager> ();
         brickHealthManager  = FindObjectOfType<BrickHealthManager>();
         gameManager = FindObjectOfType<GameManager>();
-
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if(scoreManager.diamondStarCount < balls2xCost){
+        if(scoreManager.diamondStarCount < balls2xCost  && balls2xButton.interactable != false){
             balls2xButton.interactable = false;
         }
-        if(scoreManager.diamondStarCount < damage2xCost){
+        if(scoreManager.diamondStarCount < damage2xCost  && damage2xButton.interactable != false){
             damage2xButton.interactable = false;
         }
-        if(scoreManager.diamondStarCount < halfHPCost){
+        if(scoreManager.diamondStarCount < halfHPCost && halfHpButton.interactable != false){
             halfHpButton.interactable = false;
         }
     }
-
     public void Balls2x(){
         if(scoreManager.SubtractDiamondStarCount(balls2xCost)){
             extraBallManager.numberOfExtraBalls *= 2;
@@ -69,7 +62,6 @@ public class SpecialItemManager : MonoBehaviour
             extraBallManager.numberOfBallsToFire -= balls2x;
             balls2xButtonText.color = new Color(1f,0.5f,0f);
             isballs2x = false;
-            
         }
         if(damage2xButton.interactable == false){ 
             damage = 1;

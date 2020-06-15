@@ -10,11 +10,8 @@ public class BrickHealthManager : MonoBehaviour
     public GameObject brickDestroyParticle;
     private SpriteRenderer blockImage;
     public Sprite spriteBlock;
-
     public SpecialItemManager specialItemManager;
-    
     private ScoreManager score;
-    // Start is called before the first frame update
     void Start()
     {
         specialItemManager = FindObjectOfType<SpecialItemManager>();
@@ -23,7 +20,6 @@ public class BrickHealthManager : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         score = FindObjectOfType<ScoreManager>();
         brickHealth = gameManager.level;
-        //chance to double health
         if(Random.value <= gameManager.probabilityOfDoubleHealth && gameManager.level >= 5){
             brickHealth = gameManager.level*2;
         }
@@ -35,9 +31,7 @@ public class BrickHealthManager : MonoBehaviour
     }
     void TakeDamage( int  damageToTake){
         brickHealth -= damageToTake;
-
     }
-    // Update is called once per frame
     void Update()
     {
         brickHealthText.text = "" + brickHealth;

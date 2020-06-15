@@ -11,13 +11,10 @@ public class MainMenuManager : MonoBehaviour
     public Button quitButton;
     private int soundState;
     private int musicState;
-
     public GameObject soundToggle;
     public GameObject musicToggle;
-    // Start is called before the first frame update
     void Start()
     {
-        //soundToggle  = GameObject.Find("Sound Toggle");
         optionPanel.SetActive (false);
         soundState = PlayerPrefs.GetInt ("soundOption");
         musicState = PlayerPrefs.GetInt ("musicOption");
@@ -34,8 +31,6 @@ public class MainMenuManager : MonoBehaviour
             musicToggle.GetComponent<Toggle>().isOn = false;
         }
     }
-
-    // Update is called once per frame
     void Update()
     {
         if(soundToggle.GetComponent<Toggle>().isOn == true){
@@ -62,20 +57,17 @@ public class MainMenuManager : MonoBehaviour
             backButton();
         }
     }
-
     public void StartButton(){
         SceneManager.LoadScene("MainScene");
     }
     public void Quit(){
         Application.Quit();
-
     }
     public void OptionButton(){
         optionPanel.SetActive (true);
         startButton.interactable = false;
         optionButton.interactable = false;
         quitButton.interactable = false;
-
     }
     public void backButton(){
         optionPanel.SetActive (false);
@@ -91,5 +83,4 @@ public class MainMenuManager : MonoBehaviour
     {
         Application.OpenURL ("https://www.kenney.nl/");
     }
-
 }

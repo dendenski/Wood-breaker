@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UI;
 public class BallControl : MonoBehaviour
 {
@@ -48,22 +47,19 @@ public class BallControl : MonoBehaviour
     }
     void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.Space)) {
             ballDown();
-        }
-
-
-        if(specialItemManager.damage == 2){
-            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1f,0f,0f);
-        }else if(specialItemManager.damage == 1){
-            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.9716981f,0.8459923f,0.7196066f);
         }
         switch(currentBallState)
         {
             case ballState.aim:
                 MouseInput();
                 TouchInput2();
+                if(specialItemManager.damage == 2){
+                    this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1f,0f,0f);
+                }else if(specialItemManager.damage == 1){
+                    this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.9716981f,0.8459923f,0.7196066f);
+                }
                 stopButton.interactable = true;
                 stopButton.transform.position = Vector2.MoveTowards(stopButton.transform.position, initialPositionOfStopButton,  20 * Time.deltaTime);
                 specialItem.transform.position = Vector2.MoveTowards(specialItem.transform.position, new Vector2(0f,0f),  20 * Time.deltaTime);
@@ -110,7 +106,6 @@ public class BallControl : MonoBehaviour
     }
     public void MouseInput(){
         Vector2 playPosition =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
         if(Input.GetMouseButtonDown(0) && playArea(playPosition)){
             MouseClicked();
         }
@@ -136,20 +131,17 @@ public class BallControl : MonoBehaviour
             return false;
         }
     }
-
     public void MouseClicked(){
         mouseStartPosition = this.transform.position;
         isClicked = true;
         lineRenderer.enabled = true;
     }
-
     public void MouseDragged(Vector2 tempMousePosition){
         lineRenderer.enabled = true;
         float diffX = mouseStartPosition.x - tempMousePosition.x;
         float diffY = Mathf.Abs(mouseStartPosition.y - tempMousePosition.y);
         RayCastGuide(diffX, diffY);
     }
-
     private void RayCastGuide(float diffX, float diffY){
         RaycastHit2D[] hit = new RaycastHit2D[2];
         int layerMask = (1 << 8) | (1 << 9);
@@ -168,8 +160,6 @@ public class BallControl : MonoBehaviour
             hit[1] = Physics2D.Raycast(adjustVector, 
                 Vector2.Reflect(adjustVector - (Vector2)this.transform.position, hit[0].normal), Mathf.Infinity,~layerMask);
             lineRenderer.SetPosition(0, this.transform.position);
-            
-
             if(adjustVector.x < 0){
                 Vector2 offset =  new Vector2(-.25f, .25f);
                 lineRenderer.SetPosition(1, hit[0].point - offset);
@@ -182,10 +172,7 @@ public class BallControl : MonoBehaviour
             }
             
         }
-
-
     }
-
     public void ReleaseMouse(){
         lineRenderer.enabled =false;
         isClicked = false;
@@ -205,7 +192,6 @@ public class BallControl : MonoBehaviour
                 isClicked = true;
                 lineRenderer.enabled = true;
             }
-
             if(touch.phase == TouchPhase.Moved && playArea(playPosition) && isClicked){
                 lineRenderer.enabled = true;
                 Vector2 tempMousePosition = Camera.main.ScreenToWorldPoint(touch.position);
@@ -216,7 +202,6 @@ public class BallControl : MonoBehaviour
             }else if(touch.phase == TouchPhase.Moved && !playArea(playPosition) && isClicked){
                 lineRenderer.enabled = false;
             }
-
             if(touch.phase == TouchPhase.Ended && playArea(playPosition)  && isClicked){
                 lineRenderer.enabled = false;
                 isClicked = false;
@@ -233,7 +218,6 @@ public class BallControl : MonoBehaviour
             }
         }
     }
-
     public void ballDown(){
         tempVelocity = new Vector2(0, -ballVelocityY).normalized;
         if(currentBallState == ballState.fire || currentBallState == ballState.wait){
@@ -245,7 +229,6 @@ public class BallControl : MonoBehaviour
             ColliderChangeEnable(false);
         }
     }
-
     private void ColliderChangeEnable(bool status){
         for(int i = 0; i < gameManager.bricksInScene.Count; i++)
         {
