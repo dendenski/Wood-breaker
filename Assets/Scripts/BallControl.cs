@@ -66,7 +66,7 @@ public class BallControl : MonoBehaviour
                 break;
             case ballState.fire:
                 stopButton.transform.position = Vector2.MoveTowards(stopButton.transform.position, targetPositionOfStopButton,  20 * Time.deltaTime);
-                specialItem.transform.position = Vector2.MoveTowards(specialItem.transform.position, new Vector2(0f,-2.5f),  20 * Time.deltaTime);
+                specialItem.transform.position = Vector2.MoveTowards(specialItem.transform.position, new Vector2(0f,-5.5f),  20 * Time.deltaTime);
                 break;
             case ballState.wait:
                 if(gameManager.ballsInScene.Count == 0){
